@@ -1,26 +1,41 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import theme from 'styled-theming';
+import Header from "../components/Header"
 
-// Define our button, but with the use of props.theme this time
-const Button = styled.button`
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
+// define background colours for `mode` theme
+const backgroundColor = theme('mode', {
+  light: '#fafafa',
+  dark: '#222'
+});
 
-  color: ${props => props.theme.main};
-  border: 2px solid ${props => props.theme.main};
+// define text color for `mode` theme
+const textColor = theme('mode', {
+  light: '#000',
+  dark: '#fff'
+});
+
+// apply theming to a styled component
+const Main = styled.div`
+  background-color: ${backgroundColor};
+  color: ${textColor}
 `;
 
-// Define what props.theme will look like
-const themeSettings = {
-  main: 'mediumseagreen',
-};
+const WrapperHeader = styled.div`
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+`;
 
 const Layout = ({ children }) => (
-    <ThemeProvider theme={themeSettings}>
-      {children()}
-    </ThemeProvider>
+  <ThemeProvider theme={{ mode: 'light' }}>
+    <Main>
+      <Header/>
+      {children}
+      <footer> © {new Date().getFullYear()} </footer>
+    </Main>
+  </ThemeProvider>
   );
   
   export default Layout;
